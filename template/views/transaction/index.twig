@@ -1,0 +1,69 @@
+{% extends 'layout/app.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">Transaction</div>
+
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <a href="{{ path_for('transactionAdd', {'customer_id' : customer_id }) }}" class="btn btn-primary">Add Transaction</a>
+                    </div>
+                    <br>
+                    <br>
+                    {% if( flash.message('success') ) %}
+                        <div class="alert alert-success" role="alert">
+                            {{ flash.message('success')[0] }}
+                        </div>
+                    {% endif %}
+                    <div class="col-md-12">
+                        <table class="table table-responsive">
+                            <tr>
+                                <th>Nominal</th>
+                                <th>Tanggal Transaksi</th>
+                                <th>Type</th>
+                                <th>Action</th>
+                            </tr>
+                            {% for transaction in transactions %}
+                                <tr>
+                                    <td>Rp {{ transaction.nominal|number_format }}</td>
+                                    <td>{{ transaction.tanggal_transaksi }}</td>
+                                    <td>{{ (transaction.type)?'Kredit':'Debet' }}</td>
+                                    <td>
+                                        <a href="{{ path_for('transactionEdit', {'id' : transaction.id, 'customer_id' : customer_id  }) }}" class="btn btn-warning">Edit</a>
+                                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete{{ transaction.id }}">Delete</a>
+
+                                        <div class="modal fade" id="delete{{ transaction.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                          <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Delete Transaction</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                Are You Sure?
+                                              </div>
+                                              <div class="modal-footer">
+                                                <form action="{{ path_for('transactionDelete', {'customer_id' : customer_id}) }}" method="POST">
+                                                <input type="hidden" value="DELETE" name="_METHOD">
+                                                <input type="hidden" value="{{ transaction.id }}" name="id">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

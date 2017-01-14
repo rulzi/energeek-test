@@ -1,0 +1,141 @@
+{% extends 'layout/app.twig' %}
+
+{% block body %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            {% if( flash.message('success') ) %}
+                <div class="alert alert-success" role="alert">
+                    {{ flash.message('success')[0] }}
+                </div>
+            {% endif %}
+
+            {% if( csrf_error ) %}
+                <div class="alert alert-danger" role="alert">
+                    Failed CSRF check!
+                </div>
+            {% endif %}
+
+            {% if( errors ) %}
+                <div class="alert alert-danger" role="alert">
+                    Missing Field Required
+                </div>
+            {% endif %}
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Add Customer</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ path_for('customerSave') }}" enctype="multipart/form-data">
+                        <input type="hidden" name="{{ nameKey }}" value="{{ name }}">
+                        <input type="hidden" name="{{ valueKey }}" value="{{ value }}">
+
+                        <div class="form-group{{ errors.nik ? ' has-error' : '' }}">
+                            <label class="col-md-2 control-label">NIK</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="nik" value="{{ old.nik }}">
+                                {% if errors.nik %}
+                                    <span class="help-block">
+                                        <strong>{{ errors.nik[0] }}</strong>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ errors.nama ? ' has-error' : '' }}">
+                            <label class="col-md-2 control-label">Nama</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="nama" value="{{ old.nama }}">
+                                {% if errors.nama %}
+                                    <span class="help-block">
+                                        <strong>{{ errors.nama[0] }}</strong>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ errors.alamat ? ' has-error' : '' }}">
+                            <label class="col-md-2 control-label">Alamat</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" name="alamat">{{ old.alamat }}</textarea>
+                                {% if errors.alamat %}
+                                    <span class="help-block">
+                                        <strong>{{ errors.alamat[0] }}</strong>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ errors.email ? ' has-error' : '' }}">
+                            <label class="col-md-2 control-label">Email</label>
+                            <div class="col-md-10">
+                                <input type="email" class="form-control" name="email" value="{{ old.email }}">
+                                {% if errors.email %}
+                                    <span class="help-block">
+                                        <strong>{{ errors.email[0] }}</strong>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ errors.telp ? ' has-error' : '' }}">
+                            <label class="col-md-2 control-label">Telp</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="telp" value="{{ old.telp }}">
+                                {% if errors.telp %}
+                                    <span class="help-block">
+                                        <strong>{{ errors.telp[0] }}</strong>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ errors.tempat_lahir ? ' has-error' : '' }}">
+                            <label class="col-md-2 control-label">Tempat lahir</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="tempat_lahir" value="{{ old.tempat_lahir }}">
+                                {% if errors.tempat_lahir %}
+                                    <span class="help-block">
+                                        <strong>{{ errors.tempat_lahir[0] }}</strong>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ errors.tanggal_lahir ? ' has-error' : '' }}">
+                            <label class="col-md-2 control-label">Tanggal Lahir</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="tanggal_lahir" value="{{ old.tanggal_lahir }}">
+                                {% if errors.tanggal_lahir %}
+                                    <span class="help-block">
+                                        <strong>{{ errors.tanggal_lahir[0] }}</strong>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Image</label>
+                            <div class="col-md-4">
+                                <input type="file" name="image" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-6">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-btn fa-user"></i>Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
